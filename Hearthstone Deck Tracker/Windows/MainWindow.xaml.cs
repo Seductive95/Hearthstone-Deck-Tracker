@@ -20,6 +20,7 @@ using Hearthstone_Deck_Tracker.Controls.DeckPicker;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
+using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.LogReader;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Replay;
@@ -34,6 +35,7 @@ using MahApps.Metro.Controls.Dialogs;
 #endif
 using static System.Windows.Visibility;
 using Application = System.Windows.Application;
+using MenuItem = System.Windows.Controls.MenuItem;
 
 #endregion
 
@@ -171,7 +173,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				};
 				var dialogResult = dialog.ShowDialog();
 				if(dialogResult == System.Windows.Forms.DialogResult.OK)
-					ReplayReader.LaunchReplayViewer(dialog.FileName);
+					HsReplayManager.ShowReplay(dialog.FileName);
 			}
 			catch(Exception ex)
 			{
@@ -824,5 +826,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 #endregion
 
 		private void HyperlinkUpdateNow_OnClick(object sender, RoutedEventArgs e) => Updater.StartUpdate();
+
+		private async void MenuItemLastGamesReplay_OnClick(object sender, RoutedEventArgs e)
+		{
+			var game = (e.OriginalSource as MenuItem)?.DataContext as GameStats;
+			if(game == null)
+				return;
+			await HsReplayManager.ShowReplay(game);
+		}
 	}
 }
