@@ -18,6 +18,7 @@ using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Controls.DeckPicker;
 using Hearthstone_Deck_Tracker.Controls.Error;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.HsReplay;
@@ -29,6 +30,7 @@ using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.Updating;
+using Hearthstone_Deck_Tracker.Utility.Toasts;
 using MahApps.Metro.Controls.Dialogs;
 #if(SQUIRREL)
 	using Squirrel;
@@ -173,7 +175,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				};
 				var dialogResult = dialog.ShowDialog();
 				if(dialogResult == System.Windows.Forms.DialogResult.OK)
-					HsReplayManager.ShowReplay(dialog.FileName);
+					HsReplayManager.ShowReplay(dialog.FileName, true);
 			}
 			catch(Exception ex)
 			{
@@ -832,7 +834,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var game = (e.OriginalSource as MenuItem)?.DataContext as GameStats;
 			if(game == null)
 				return;
-			await HsReplayManager.ShowReplay(game);
+			await HsReplayManager.ShowReplay(game, true);
 		}
 	}
 }
