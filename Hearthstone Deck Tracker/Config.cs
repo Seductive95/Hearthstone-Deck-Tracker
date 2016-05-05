@@ -8,6 +8,7 @@ using System.Windows;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.HsReplay.Enums;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
@@ -389,6 +390,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(true)]
 		public bool FlashHsOnTurnStart = true;
+
+		[DefaultValue(false)]
+		public bool ForceLocalReplayViewer = false;
 
 		[DefaultValue(false)]
 		public bool ForceMouseHook = false;
