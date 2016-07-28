@@ -71,6 +71,9 @@ namespace Hearthstone_Deck_Tracker.HsReplay.API
 		[JsonProperty("scenario_id", NullValueHandling = NullValueHandling.Ignore)]
 		public int? ScenarioId => _game?.ScenarioId ?? _gameMetaData?.ServerInfo?.Mission;
 
+		[JsonProperty("format", NullValueHandling = NullValueHandling.Ignore)]
+		public int? Format => _game?.Format != null ? (int)HearthDbConverter.GetFormatType(_game.Format) : (int?)null;
+
 		[JsonProperty("player_1", NullValueHandling = NullValueHandling.Ignore)]
 		public Player Player1 { get; set; } = new Player();
 
@@ -98,6 +101,9 @@ namespace Hearthstone_Deck_Tracker.HsReplay.API
 			[JsonProperty("deck", NullValueHandling = NullValueHandling.Ignore)]
 			public string DeckList { get; set; }
 
+			[JsonProperty("deck_id", NullValueHandling = NullValueHandling.Ignore)]
+			public long? DeckId { get; set; }
+
 			[JsonProperty("cardback", NullValueHandling = NullValueHandling.Ignore)]
 			public int? Cardback { get; set; }
 		}
@@ -115,8 +121,11 @@ namespace Hearthstone_Deck_Tracker.HsReplay.API
 				friendly.Cardback = _game.PlayerCardbackId;
 			if(_game?.Stars > 0)
 				friendly.Stars = _game.Stars;
-			if(_game?.PlayerCards.Sum(x => x.Count) == 30 && _game?.PlayerCards.Sum(x => x.Unconfirmed) == 0)
+			if(_game?.PlayerCards.Sum(x => x.Count) == 30 && _game?.PlayerCards.Sum(x => x.Unconfirmed) <= 24)
+			{
 				friendly.DeckList = string.Join(",", _game?.PlayerCards.SelectMany(x => Enumerable.Repeat(x.Id, x.Count)));
+				friendly.DeckId = _game?.HsDeckId;
+			}
 
 			if(_game?.OpponentRank > 0)
 				opposing.Rank = _game.OpponentRank;
@@ -124,8 +133,6 @@ namespace Hearthstone_Deck_Tracker.HsReplay.API
 				opposing.LegendRank = _game.OpponentLegendRank;
 			if(_game?.OpponentCardbackId > 0)
 				opposing.Cardback = _game.OpponentCardbackId;
-			if(_game?.OpponentCards.Sum(x => x.Count) == 30 && _game?.OpponentCards.Sum(x => x.Unconfirmed) == 0)
-				opposing.DeckList = string.Join(",", _game?.OpponentCards.SelectMany(x => Enumerable.Repeat(x.Id, x.Count)));
 
 			if(_game?.FriendlyPlayerId > 0)
 			{

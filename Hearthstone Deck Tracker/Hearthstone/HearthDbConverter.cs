@@ -1,6 +1,5 @@
 ﻿#region
 
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using HearthDb.Enums;
@@ -116,6 +115,20 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				default:
 					return null;
 			}
+		}
+
+		public static FormatType GetFormatType(Format? format)
+		{
+			if(format == null)
+				return FormatType.FT_UNKNOWN;
+			switch(format.Value)
+			{
+				case Format.Standard:
+					return FormatType.FT_STANDARD;
+				case Format.Wild:
+					return FormatType.FT_STANDARD;
+			}
+			return FormatType.FT_UNKNOWN;
 		}
 	}
 }
