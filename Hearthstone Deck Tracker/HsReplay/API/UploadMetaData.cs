@@ -74,10 +74,10 @@ namespace Hearthstone_Deck_Tracker.HsReplay.API
 		[JsonProperty("format", NullValueHandling = NullValueHandling.Ignore)]
 		public int? Format => _game?.Format != null ? (int)HearthDbConverter.GetFormatType(_game.Format) : (int?)null;
 
-		[JsonProperty("player_1", NullValueHandling = NullValueHandling.Ignore)]
+		[JsonProperty("player1", NullValueHandling = NullValueHandling.Ignore)]
 		public Player Player1 { get; set; } = new Player();
 
-		[JsonProperty("player_2", NullValueHandling = NullValueHandling.Ignore)]
+		[JsonProperty("player2", NullValueHandling = NullValueHandling.Ignore)]
 		public Player Player2 { get; set; } = new Player();
 
 
@@ -99,7 +99,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay.API
 			public int? Losses { get; set; }
 
 			[JsonProperty("deck", NullValueHandling = NullValueHandling.Ignore)]
-			public string DeckList { get; set; }
+			public string[] DeckList { get; set; }
 
 			[JsonProperty("deck_id", NullValueHandling = NullValueHandling.Ignore)]
 			public long? DeckId { get; set; }
@@ -123,7 +123,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay.API
 				friendly.Stars = _game.Stars;
 			if(_game?.PlayerCards.Sum(x => x.Count) == 30 && _game?.PlayerCards.Sum(x => x.Unconfirmed) <= 24)
 			{
-				friendly.DeckList = string.Join(",", _game?.PlayerCards.SelectMany(x => Enumerable.Repeat(x.Id, x.Count)));
+				friendly.DeckList = _game?.PlayerCards.SelectMany(x => Enumerable.Repeat(x.Id, x.Count)).ToArray();
 				friendly.DeckId = _game?.HsDeckId;
 			}
 
