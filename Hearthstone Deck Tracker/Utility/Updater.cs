@@ -40,7 +40,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 #if(SQUIRREL)
 			try
 			{
-				using(var mgr = await UpdateManager.GitHubUpdateManager("https://github.com/Epix37/HDT-Releases", prerelease: Config.Instance.CheckForBetaUpdates))
+				using(var mgr = await UpdateManager.GitHubUpdateManager("https://github.com/HearthSim/HDT-Releases-HSReplay", prerelease: Config.Instance.CheckForBetaUpdates))
 				{
 					var release = await mgr.UpdateApp();
 					if(release != null)
@@ -112,7 +112,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			try
 			{
 				bool updated;
-				using(var mgr = await UpdateManager.GitHubUpdateManager("https://github.com/Epix37/HDT-Releases", prerelease: Config.Instance.CheckForBetaUpdates))
+				using(var mgr = await UpdateManager.GitHubUpdateManager("https://github.com/HearthSim/HDT-Releases-HSReplay", prerelease: Config.Instance.CheckForBetaUpdates))
 				{
 					SquirrelAwareApp.HandleEvents(
 						v => mgr.CreateShortcutForThisExe(),
