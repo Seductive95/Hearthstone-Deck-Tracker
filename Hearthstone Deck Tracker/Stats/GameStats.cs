@@ -437,6 +437,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 			HearthStatsId = null;
 		}
 
+		public long HsDeckId { get; set; }
+
 		[XmlArray(ElementName = "PlayerCards")]
 		[XmlArrayItem(ElementName = "Card")]
 		public List<TrackedCard> PlayerCards { get; set; } = new List<TrackedCard>();
@@ -502,6 +504,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool ShouldSerializeScenarioId() => ScenarioId > 0;
 		public bool ShouldSerializeServerInfo() => ServerInfo != null;
 		public bool ShouldSerializeHsReplay() => HsReplay.UploadTries > 0 || HsReplay.Uploaded;
+		public bool ShouldSerializeHsDeckId() => HsDeckId > 0;
 
 		#region Obsolete
 
